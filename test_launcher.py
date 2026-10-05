@@ -7,6 +7,8 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import runpy
+import types
 import sys
 import tempfile
 import unittest
@@ -133,5 +135,17 @@ class LauncherIndependentTests(unittest.TestCase):
             with self.assertRaises((OSError,RuntimeError,ValueError)):
                 with launch.run_lock(link):pass
             self.assertEqual(target.read_text(),'INVENTED_SENTINEL')
+
+    def test_cli_does_not_echo_arbitrary_runtime_error(self):
+        self.context()
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);frozen_fixture(root)
+            arguments=types.SimpleNamespace(menu=False, limit=2, dry_run=True, research_root=root)
+            output=io.StringIO()
+            with patch.object(launch.argparse.ArgumentParser,'parse_args',return_value=arguments), patch.object(runner,'run',side_effect=RuntimeError('PRIVATE_LIBRARY_ERROR_SENTINEL')), contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
+                with self.assertRaises(SystemExit) as caught:
+                    runpy.run_path(str(REPO/'launch.py'),run_name='__main__')
+            self.assertEqual(caught.exception.code,1)
+            self.assertNotIn('PRIVATE_LIBRARY_ERROR_SENTINEL',output.getvalue())
 
 if __name__=='__main__':unittest.main()
