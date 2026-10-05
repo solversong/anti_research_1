@@ -9,11 +9,14 @@ from pathlib import Path
 import socket
 import time
 
+from progress import Progress
+from operational import exclusive_run, code_provenance
+
 import pilot_support as s
 from local_runtime import require, utcnow, strict_json, canonical_digest, endpoint_port, PinnedTokenizer, LocalTransport, validate_local_model
 from draft_gate import validate_rules, gate
 
-VERSION='unreviewed-draft-pilot-v0.1'
+VERSION='unreviewed-draft-pilot-v0.2-monitor'
 PROMPT_VERSION='closed-option-draft-review-v0.1'
 FACT_FIELDS=set('''baseline.current_regimen_established candidate.action candidate.contraindication_or_interaction_present candidate.coverage_change_justified candidate.dosing_feasible candidate.is_cefepime_monotherapy candidate.is_oral candidate.oral_agent_exposure_adequate candidate.primary_agent_resistant candidate.primary_agent_susceptible candidate.regimen candidate.valid_alternative_or_combination case.adult case.enterobacterales_bsi case.monomicrobial course.ceftriaxone_continuation_only course.ceftriaxone_started_empirically course.clinically_improving course.nonsevere evidence.core_consistent infection.deep_or_complicated infection.persistent_bacteremia infection.source_control_adequate organism.ampc_moderate_risk organism.carbapenem_resistant organism.esbl organism.esbl_concern_assessed patient.critically_ill patient.hemodynamically_stable patient.hypoalbuminemia patient.immunocompromised patient.oral_absorption_adequate review.CRE_mechanism_specific_reviewed review.complicated_case_reviewed review.immunocompromised_case_reviewed review.oral_transition_scope_approved temporal.AST_available_by_T temporal.T_established patient.nonclinical_nuisance_marker'''.split())
 SOURCES={'synthetic_spec_assumption','synthetic_spec_fixture','recorded_structured_untimed','derived_from_recorded_structure_unverified','unknown','fixed_option_contract'}
@@ -156,18 +159,46 @@ def reviewer_html(output,cases,cs,ds):
     fd=os.open(output/'Phase2_기준안검토후_모델초안열기.html',os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
     with os.fdopen(fd,'w') as f:f.write(text)
 
-def run(data,rules,config,mode,output,execute=False,limit=None,resume=None,transport_factory=LocalTransport,renderer_factory=PinnedTokenizer):
+def run(data,rules,config,mode,output,execute=False,limit=None,resume=None,transport_factory=LocalTransport,renderer_factory=PinnedTokenizer,console=False):
+    require(socket.gethostname()=='Ericui-MacStudio.local','WRONG_HOST')
+    output=Path(output)
+    require(not output.exists(),'OUTPUT_EXISTS')
+    require(limit is None or type(limit) is int and limit>0,'INVALID_LIMIT')
+    count=len(data.get('cases',[]))
+    with exclusive_run(output.parent):
+        # Never reopen or overwrite a prior run, including interrupted runs.
+        require(not output.exists(),'OUTPUT_EXISTS')
+        with Progress(output,model='qwen3.5:27b',version=VERSION,total=min(limit or count,count),dataset_total=count,console=console) as progress:
+            try:
+                result=_run(data,rules,config,mode,output,execute,limit,resume,transport_factory,renderer_factory,progress)
+                state=result['status']
+                if state=='DRY_RUN_ONLY': terminal='dry_run_complete'
+                elif state.startswith('ABORTED') or state.startswith('STOPPED'): terminal='failed'
+                elif progress.snapshot()['failed']: terminal='completed_with_errors'
+                elif state=='PLANNED_PREFIX_COMPLETE_CONTINUATION_PENDING': terminal='planned_prefix_complete'
+                else: terminal='completed'
+                progress.finish(terminal)
+                return result
+            except (KeyboardInterrupt,SystemExit):
+                progress.finish('interrupted')
+                raise
+            except BaseException:
+                progress.finish('failed')
+                raise
+
+
+def _run(data,rules,config,mode,output,execute=False,limit=None,resume=None,transport_factory=LocalTransport,renderer_factory=PinnedTokenizer,progress=None):
     require(socket.gethostname()=='Ericui-MacStudio.local','WRONG_HOST')
     require(mode in ('synthetic_spec','retrospective_untimed_review'),'INVALID_MODE')
     config_check(config);rule_hash=validate_rules(rules);cases=validate_data(data,mode)
-    require(not output.exists(),'OUTPUT_EXISTS')
+    progress.set_stage('tokenizer')
     renderer=renderer_factory(config);prepared={}
     for case in cases:
         rendered=renderer.render(prompt_messages(case,rules,mode))
         require(rendered['prompt_tokens']+config['max_output_tokens']+config['context_safety_margin_tokens']<=config['num_ctx'],'WHOLE_SET_CONTEXT_OVERFLOW_NO_TRUNCATION')
         prepared[case['case_id']]=rendered
     frozen={'data_sha256':s.digest(data),'rules_sha256':rule_hash,'config_sha256':s.digest(config),'prompt_version':PROMPT_VERSION,'system_prompt_sha256':s.digest(SYSTEM),'mode':mode,
-            'code_sha256':{name:s.file_sha(Path(__file__).with_name(name)) for name in ('run_draft_pilot.py','draft_gate.py','local_runtime.py','pilot_support.py')},
+            'code_sha256':{name:s.file_sha(Path(__file__).with_name(name)) for name in ('run_draft_pilot.py','draft_gate.py','local_runtime.py','pilot_support.py','progress.py','monitor.py','operational.py')},
             'prompt_serializer_sha256':s.digest(['scenario_mode','facts','evidence','options','timing_notice',PROMPT_VERSION])}
     cs=[];ds=[];prior_calls=0;consecutive=0
     if resume:
@@ -185,7 +216,7 @@ def run(data,rules,config,mode,output,execute=False,limit=None,resume=None,trans
     prior_recorded_count=len(cs)
     require(limit is None or type(limit) is int and limit>0,'INVALID_LIMIT')
     selected=remaining if limit is None else remaining[:limit]
-    output.mkdir(parents=True,mode=0o700)
+    progress.set_plan(total=len(selected),dataset_total=len(cases),reused_records=len(cs))
     (output/'calls').mkdir(mode=0o700)
     preflight={'status':'READY_FOR_DRAFT_PILOT_NOT_FORMAL_EVALUATION','frozen':frozen,'planned_cases':len(cases),'this_stage_planned_cases':len(selected),
         'prompt_tokens_min':min(p['prompt_tokens'] for p in prepared.values()),'prompt_tokens_max':max(p['prompt_tokens'] for p in prepared.values()),
@@ -196,9 +227,12 @@ def run(data,rules,config,mode,output,execute=False,limit=None,resume=None,trans
         'runtime_source_sha256':s.file_sha(Path(__file__)),'gate_source_sha256':s.file_sha(Path(gate.__code__.co_filename)),
         'clinical_accuracy':'NOT_COMPUTED','clinical_gold':False,'formal_evaluation_ready':False,'resume_from':str(resume) if resume else None,
         'model_identity_before':None,'model_identity_after':None,'request_count_definition':'generation request attempts; timeout leaves inference completion unknown'}
+    manifest['code_provenance']=code_provenance()
     start=time.perf_counter();transport=None
     try:
         if execute:
+            manifest['status']='RUNNING'
+            progress.set_stage('validating_model')
             transport=transport_factory(config);identity=validate_local_model(transport,config);manifest['model_identity_before']=identity
             for case in selected:
                 rendered=prepared[case['case_id']];index=len(cs)+1
@@ -209,6 +243,7 @@ def run(data,rules,config,mode,output,execute=False,limit=None,resume=None,trans
                    'expected_prompt_tokens':rendered['prompt_tokens'],'model_identity':identity,'generated_at':utcnow(),
                    'actual_model_calls':1,'retry_count':0,'raw_server_response':None,'error_code':None}
                 s.private_write(output/'calls'/f'{index:04d}_prompt.json',{'case_id':case['case_id'],'prompt':rendered['prompt'],'expected_tokens':rendered['prompt_tokens'],'request_sha256':c['request_sha256']})
+                progress.start_item(len(cs)-prior_recorded_count+1)
                 tick=time.perf_counter()
                 try:
                     raw=transport.request('/api/generate',request);c['raw_server_response']=raw
@@ -221,13 +256,17 @@ def run(data,rules,config,mode,output,execute=False,limit=None,resume=None,trans
                 except (KeyError,TypeError,AttributeError):c['error_code']='INVALID_RESPONSE_SCHEMA'
                 c['elapsed_seconds']=time.perf_counter()-tick;cs.append(c)
                 s.private_write(output/'calls'/f'{index:04d}_C.json',c)
+                progress.set_stage('applying_gate')
                 d=gate(case,c,rules,mode);d['case_id']=case['case_id'];d['D_sha256']=s.digest({k:v for k,v in d.items() if k!='D_sha256'});ds.append(d)
                 s.private_write(output/'calls'/f'{index:04d}_D.json',d)
+                progress.finish_item(success=c['status']=='parsed')
                 consecutive=0 if c['status']=='parsed' else consecutive+1
                 if consecutive>=3:
                     manifest['status']='STOPPED_THREE_CONSECUTIVE_FAILURES';break
+            progress.set_stage('verifying_model')
             manifest['model_identity_after']=validate_local_model(transport,config)
             if not manifest['status'].startswith('STOPPED'):manifest['status']='COMPLETE_ALL_ATTEMPTED' if len(cs)==len(cases) else 'PLANNED_PREFIX_COMPLETE_CONTINUATION_PENDING'
+            progress.set_stage('saving')
             s.private_write(output/'C_responses.json',cs);s.private_write(output/'D_results.json',ds)
             s.private_write(output/'draft_pilot_summary.json',summarize(cases,cs,ds,mode))
             if mode=='retrospective_untimed_review':reviewer_html(output,cases,cs,ds)
@@ -236,7 +275,12 @@ def run(data,rules,config,mode,output,execute=False,limit=None,resume=None,trans
     except (KeyboardInterrupt,SystemExit):
         manifest['status']='INTERRUPTED_INFERENCE_COMPLETION_UNKNOWN';manifest['scores_withheld']=True
         raise
+    except Exception:
+        manifest['status']='ABORTED_UNEXPECTED_ERROR';manifest['scores_withheld']=True
+        raise
     finally:
+        try: progress.set_stage('finalizing')
+        except (OSError,RuntimeError,ValueError): manifest['monitor_error_code']='FINALIZING_PROGRESS_WRITE_FAILED'
         if transport:
             manifest['new_generation_request_attempts']=transport.generation_requests
             manifest['network_requests']=transport.network_requests
@@ -248,7 +292,7 @@ def run(data,rules,config,mode,output,execute=False,limit=None,resume=None,trans
         manifest['elapsed_seconds']=time.perf_counter()-start
         if manifest.get('scores_withheld'):
             s.private_write(output/'C_responses_partial.json',cs);s.private_write(output/'D_results_partial.json',ds)
-        manifest['outputs_sha256']={p.name:s.file_sha(p) for p in output.iterdir() if p.is_file()}
+        manifest['outputs_sha256']={p.name:s.file_sha(p) for p in output.iterdir() if p.is_file() and p.name not in ('progress.json','events.jsonl','.progress.lock') and not p.name.startswith('.progress-')}
         s.private_write(output/'run_manifest.json',manifest)
     return manifest
 
@@ -258,8 +302,9 @@ def main():
     for key in ('cases','rules','config','output'):parser.add_argument('--'+key,type=Path,required=True)
     parser.add_argument('--execute',action='store_true');parser.add_argument('--limit',type=int);parser.add_argument('--resume-from',type=Path)
     args=parser.parse_args();load=lambda path:strict_json(path.read_text())
-    result=run(load(args.cases),load(args.rules),load(args.config),args.mode,args.output,args.execute,args.limit,args.resume_from)
+    result=run(load(args.cases),load(args.rules),load(args.config),args.mode,args.output,args.execute,args.limit,args.resume_from,console=True)
     print(json.dumps({k:result[k] for k in ('status','mode','new_generation_request_attempts','recorded_parsed_responses','recorded_failures','elapsed_seconds')}))
+    if result['status'].startswith(('ABORTED','STOPPED')) or result['recorded_failures']:raise SystemExit(1)
 
 if __name__=='__main__':
     try:main()

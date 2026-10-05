@@ -3,7 +3,7 @@ import copy,json,unittest
 from pathlib import Path
 import draft_gate as g
 import pilot_support as s
-RULE_PATH=Path(__file__).resolve().parent.parent/'clinical_rules_draft_v0.1.json'
+RULE_PATH=Path(__file__).resolve().parent/'clinical_rules_draft_v0.1.json'
 def rules():return json.loads(RULE_PATH.read_text())
 def fixture(agent='meropenem',action='de_escalate'):
  d=rules();facts={k:g.atom(None,['DEV_E1']) for k in d['field_contract']}
