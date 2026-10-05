@@ -1,0 +1,167 @@
+{
+  "baseline.current_regimen_established": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "candidate.action": {
+    "default_status": "unknown",
+    "value_type": "enum",
+    "allowed_values": [
+      "de_escalate",
+      "continue",
+      "reassess",
+      "abstain"
+    ]
+  },
+  "candidate.contraindication_or_interaction_present": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "candidate.coverage_change_justified": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "candidate.dosing_feasible": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "candidate.is_cefepime_monotherapy": {
+    "default_status": "unknown",
+    "value_type": "boolean",
+    "notes": "cefepime 단독을 뜻한다. cefepime-enmetazobactam 등 보호 복합제와 구분한다."
+  },
+  "candidate.is_oral": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "candidate.oral_agent_exposure_adequate": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "candidate.primary_agent_resistant": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "candidate.primary_agent_susceptible": {
+    "default_status": "unknown",
+    "value_type": "boolean",
+    "notes": "후보의 원인균 담당 약제에 대한 독립 원자료 AST와 해석판/필요 노출조건에서 계산한다. 생성 모델 주장만으로 채우지 않는다."
+  },
+  "candidate.regimen": {
+    "default_status": "unknown",
+    "value_type": "array of canonical ingredient/regimen identifiers"
+  },
+  "candidate.valid_alternative_or_combination": {
+    "default_status": "unknown",
+    "value_type": "boolean",
+    "notes": "출력 스키마·후보집합의 단순 구조검증과 임상적으로 정당한 병용 여부를 구분한다. 후자는 독립 근거 없이 true로 만들지 않는다."
+  },
+  "case.adult": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "case.enterobacterales_bsi": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "case.monomicrobial": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "course.ceftriaxone_continuation_only": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "course.ceftriaxone_started_empirically": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "course.clinically_improving": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "course.nonsevere": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "evidence.core_consistent": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "infection.deep_or_complicated": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "infection.persistent_bacteremia": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "infection.source_control_adequate": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "organism.ampc_moderate_risk": {
+    "default_status": "unknown",
+    "value_type": "boolean",
+    "notes": "G1 Q2.1: E. cloacae complex, K. aerogenes, C. freundii, H. alvei. 종 수준 표준화가 필요한 경우 unknown. 모든 Enterobacterales를 같은 위험으로 묶지 않는다. Hafnia 근거에는 제한이 있다."
+  },
+  "organism.carbapenem_resistant": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "organism.esbl": {
+    "default_status": "unknown",
+    "value_type": "boolean",
+    "notes": "검사 양성/검증된 추정 기준과 출처를 기록한다. Not tested는 false가 아니다. 이 초안은 ceftriaxone R만으로 모든 균종 ESBL=true를 추정하지 않는다."
+  },
+  "organism.esbl_concern_assessed": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "patient.critically_ill": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "patient.hemodynamically_stable": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "patient.hypoalbuminemia": {
+    "default_status": "unknown",
+    "value_type": "boolean",
+    "notes": "시점·단위·정의 확인 없이 단순 Alb 열로 계산하지 않는다. P3의 <2.5g/dL은 그 연구 정의이며 전문의가 연구 operationalization을 검수해야 한다."
+  },
+  "patient.immunocompromised": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "patient.oral_absorption_adequate": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "review.CRE_mechanism_specific_reviewed": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "review.complicated_case_reviewed": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "review.immunocompromised_case_reviewed": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "review.oral_transition_scope_approved": {
+    "default_status": "unknown",
+    "value_type": "boolean",
+    "notes": "연구자의 별도 경구조건 탐색/주석 범위 허용을 뜻하며 전문의 검수 완료가 아니다. 기존 주성과에 용량·경로·기간 추천을 추가하지 않는다. 고정 시험 결과를 보고 사후 바꾸지 않는다."
+  },
+  "temporal.AST_available_by_T": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  },
+  "temporal.T_established": {
+    "default_status": "unknown",
+    "value_type": "boolean"
+  }
+}

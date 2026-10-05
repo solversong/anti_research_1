@@ -1,0 +1,15 @@
+# Deny all by default; only reviewed source files are tracked.
+*
+!/.gitignore
+!/PROVENANCE.json
+!/run_draft_pilot.py
+!/draft_gate.py
+!/local_runtime.py
+!/pilot_support.py
+!/prepare_pilot.py
+!/test_runner.py
+!/test_gate_independent.py
+!/test_boundary_independent.py
+!/clinical_rules_draft_v0.1.json
+!/flat_field_contract.json
+!/rule_source_map.json

@@ -1,0 +1,202 @@
+{
+  "R01": [
+    {
+      "source_id": "DESIGN",
+      "section": "Population"
+    }
+  ],
+  "R02": [
+    {
+      "source_id": "DESIGN",
+      "section": "As-of information set"
+    }
+  ],
+  "R03": [
+    {
+      "source_id": "DESIGN",
+      "section": "Baseline regimen"
+    }
+  ],
+  "R04": [
+    {
+      "source_id": "DESIGN",
+      "section": "Evidence validation"
+    }
+  ],
+  "R05": [
+    {
+      "source_id": "G1",
+      "section": "General Management Suggestions; Duration of Therapy"
+    }
+  ],
+  "R06": [
+    {
+      "source_id": "G1",
+      "section": "General Management Suggestions"
+    },
+    {
+      "source_id": "P4",
+      "section": "Treatment exposure; limitations"
+    }
+  ],
+  "R07": [
+    {
+      "source_id": "G1",
+      "section": "Empiric Therapy; patient-specific factors"
+    }
+  ],
+  "R08": [
+    {
+      "source_id": "P1",
+      "section": "Primary outcome; definitive therapy"
+    },
+    {
+      "source_id": "G1",
+      "section": "Q1.4"
+    }
+  ],
+  "R09": [
+    {
+      "source_id": "G1",
+      "section": "Q1.5"
+    }
+  ],
+  "R10": [
+    {
+      "source_id": "G1",
+      "section": "Q1.3"
+    },
+    {
+      "source_id": "P1",
+      "section": "Comparator and scope"
+    }
+  ],
+  "R11": [
+    {
+      "source_id": "G1",
+      "section": "Q1.3"
+    },
+    {
+      "source_id": "P3",
+      "section": "Prospective cohort; limitations"
+    }
+  ],
+  "R12": [
+    {
+      "source_id": "G1",
+      "section": "Q2.4"
+    }
+  ],
+  "R13": [
+    {
+      "source_id": "G1",
+      "section": "Q2.4"
+    }
+  ],
+  "R14": [
+    {
+      "source_id": "G1",
+      "section": "Q2.5"
+    }
+  ],
+  "R15": [
+    {
+      "source_id": "G1",
+      "section": "Q2.3"
+    },
+    {
+      "source_id": "P4",
+      "section": "Definitive therapy cohort"
+    }
+  ],
+  "R16": [
+    {
+      "source_id": "P2",
+      "section": "Eligibility and exclusions"
+    },
+    {
+      "source_id": "G1",
+      "section": "Transitioning to Oral Therapy; Q1.3"
+    },
+    {
+      "source_id": "DESIGN",
+      "section": "Route not a new primary endpoint"
+    }
+  ],
+  "R17": [
+    {
+      "source_id": "G1",
+      "section": "Q1.3 oral transition"
+    }
+  ],
+  "R18": [
+    {
+      "source_id": "P2",
+      "section": "Selected population and outcomes"
+    },
+    {
+      "source_id": "G1",
+      "section": "Q1.3"
+    }
+  ],
+  "R19": [
+    {
+      "source_id": "P2",
+      "section": "No uncontrolled focus criterion"
+    },
+    {
+      "source_id": "DESIGN",
+      "section": "Conservative review policy"
+    }
+  ],
+  "R20": [
+    {
+      "source_id": "P5",
+      "section": "Exclusions; not a de-escalation trial"
+    },
+    {
+      "source_id": "DESIGN",
+      "section": "Patient subgroup review"
+    }
+  ],
+  "R21": [
+    {
+      "source_id": "P2",
+      "section": "Endocarditis/neurologic exclusions"
+    },
+    {
+      "source_id": "P4",
+      "section": "Deep infection association"
+    },
+    {
+      "source_id": "DESIGN",
+      "section": "Complex-case review"
+    }
+  ],
+  "R22": [
+    {
+      "source_id": "G1",
+      "section": "Section 3, CRE; separate questions"
+    },
+    {
+      "source_id": "DESIGN",
+      "section": "Scope limitation"
+    }
+  ],
+  "R23": [
+    {
+      "source_id": "P6",
+      "section": "Structured selection in a specific trial"
+    },
+    {
+      "source_id": "DESIGN",
+      "section": "No global drug hierarchy"
+    }
+  ],
+  "R24": [
+    {
+      "source_id": "DESIGN",
+      "section": "Set-valued action–regimen reference"
+    }
+  ]
+}

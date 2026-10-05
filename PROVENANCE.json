@@ -1,0 +1,18 @@
+{
+  "origin": "clinical_preparation/2026-10-05_draft_pilot_v0.2",
+  "copied_files_sha256": {
+    "run_draft_pilot.py": "3f4c16a11225ea712153b0108661e839691da92b38c0bf66f89052d2c77b575e",
+    "draft_gate.py": "685ebc1975854c0471ad59ee3ce7c9b828e600546c9fdb86732d18b24bdc86fb",
+    "local_runtime.py": "73478ef4d9fe19b238c168762d2c122896c5602c73d83ea38ae159b64ebae5ac",
+    "pilot_support.py": "4603b9617d0685d44158156b2da51a04a0fcba711ef163f21363b0496dcf9516",
+    "prepare_pilot.py": "4c4ae3fcf37e113bb8d148b871417c11ab3eddb014a1da8f41a69eea0cea6b9b",
+    "test_runner.py": "bc622f7bfd10745ccacddfa59e472cebd641209aa70b0582151d331adf273d38",
+    "test_gate_independent.py": "ad13fea5a626d9e12f8fd3cc2cfa98a574717cbd9f8207b5f63c10d6549e1473",
+    "test_boundary_independent.py": "237f8c2a3878d09bbba84c725f953ff4402885408dbca935935d7eeaf5a359cd",
+    "clinical_rules_draft_v0.1.json": "d935734c07878544463c7455ebc2edaa19baf8f5c696352e41b4cec4823cf7a0",
+    "flat_field_contract.json": "585f6edbff63663b120330291ed3828b1d56a3d27bcaad0c054e5fb31fcfdb0d",
+    "rule_source_map.json": "828cdd627a3108dd14d5a2d7e81c74d0ec32a344668357320d4fc56e4fba412a"
+  },
+  "scope": "source code, unreviewed literature rules, invented test fixtures only; no patient data or outputs",
+  "original_run_preserved": true
+}

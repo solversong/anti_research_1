@@ -1,0 +1,2867 @@
+{
+  "schema_version": "clinical_condition_rules.v1",
+  "version": "v0.1",
+  "created_on": "2026-10-05",
+  "title": "성인 단일균 Enterobacterales 혈류감염 조건 검사 규칙 초안",
+  "status": "researcher_ai_draft_unreviewed",
+  "clinician_reviewed": false,
+  "clinical_gold_ready": false,
+  "intended_use": "offline local research only; frozen C reused for D; no extra D model calls",
+  "primary_comparison_changed": false,
+  "authorization_modes": {
+    "formal_clinical_evaluation_ready": false,
+    "local_draft_pilot_allowed_by_user": true,
+    "retrospective_untimed_review": "conditional research draft; not as-of clinical recommendation or accuracy outcome",
+    "synthetic_specification_cases": "specification conformity only, never clinical gold"
+  },
+  "source_guardrails": [
+    "No patient material was accessed to author this rule file.",
+    "No clinician impersonation, no expert approval claim.",
+    "Unreviewed rules cannot establish clinical correctness of patient recommendations.",
+    "Actual pilot findings are not used to change a frozen specification score after seeing results."
+  ],
+  "sources": [
+    {
+      "id": "G1",
+      "title": "IDSA 2026 Guidance on the Treatment of Antimicrobial Resistant Gram-Negative Infections",
+      "authors": "Tamma PD, Bonomo RA, Heil EL, Justo JA, Satlin MJ, Mathers AJ",
+      "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+      "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05",
+      "evidence_type": "official expert guidance; not a GRADE guideline; United States context",
+      "verified_directly": true,
+      "summary": "균종·감수성·환자조건에 따라 후보를 평가한다. ESBL 침습감염, AmpC, 경구전환에는 별도 조건과 예외가 있다. 약제의 나열 순서는 보편적 우열이 아니다."
+    },
+    {
+      "id": "P1",
+      "title": "Effect of Piperacillin-Tazobactam vs Meropenem on 30-Day Mortality for Patients With E coli or Klebsiella pneumoniae Bloodstream Infection and Ceftriaxone Resistance: A Randomized Clinical Trial",
+      "authors": "Harris PNA et al.; MERINO investigators",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2702145",
+      "doi": "10.1001/jama.2018.12163",
+      "version": "JAMA 2018;320:984–994",
+      "evidence_type": "randomized trial",
+      "verified_directly": true,
+      "summary": "Ceftriaxone 비감수성 E. coli/Klebsiella 혈류감염에서 PTZ의 meropenem 대비 비열등성이 입증되지 않았다. 최종 사망분석 378명, 30일 사망 23/187 대 7/191. 이 표본을 모든 균종·감염에 일반화하지 않는다."
+    },
+    {
+      "id": "P2",
+      "title": "Switch to oral antibiotics in Gram-negative bacteraemia: a randomized, open-label, clinical trial",
+      "authors": "Omrani AS et al.; SOAB Study Group",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37858867/",
+      "doi": "10.1016/j.cmi.2023.10.014",
+      "version": "Clinical Microbiology and Infection 2024;30:492–498; online 2023-10-18",
+      "evidence_type": "randomized trial",
+      "verified_directly": true,
+      "summary": "성인 단일균 Enterobacterales BSI, 활성 IV 3–5일, 48시간 이상 무열·혈역학 안정, 미통제 감염원 없음이 선정 조건이었다. mITT 165명에서 실패 21/82(IV),18/83(oral), 차이 −3.7%p(95%CI −16.6~9.2)로 10%p 비열등성 기준을 충족했다. 임신·심내막염·신경계 감염은 제외했다. 연구 선정 시간을 이번 임상 자동 임계값으로 복사하지 않는다."
+    },
+    {
+      "id": "P3",
+      "title": "Association between hypoalbuminemia and mortality among subjects treated with ertapenem versus other carbapenems: prospective cohort study",
+      "authors": "Zusman O et al.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25636928/",
+      "doi": "10.1016/j.cmi.2014.08.003",
+      "version": "Clinical Microbiology and Infection 2015;21:54–58",
+      "evidence_type": "prospective observational cohort",
+      "verified_directly": true,
+      "summary": "Enterobacteriaceae 감염 279명에서 저알부민혈증과 사망의 연관성이 ertapenem군에서 더 컸다. 연구 정의는 albumin <2.5 g/dL이었으나 관찰연구로 인과·절대금기를 증명하지 않는다. 시점·단위·임상정의 확인 전 합쳐진 Alb값으로 플래그를 만들지 않는다."
+    },
+    {
+      "id": "P4",
+      "title": "High-dose Cefepime vs Carbapenems for Bacteremia Caused by Enterobacterales With Moderate to High Risk of Clinically Significant AmpC β-lactamase Production",
+      "authors": "Kunz Coyne AJ et al.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36968970/",
+      "doi": "10.1093/ofid/ofad034",
+      "version": "Open Forum Infectious Diseases 2023;10:ofad034",
+      "evidence_type": "retrospective cohort",
+      "verified_directly": true,
+      "verification_note": "Primary article abstract retrieved via indexed PubMed; PMC full view encountered a browser check. No supplementary patient data accessed.",
+      "summary": "E. cloacae/K. aerogenes/C. freundii 균혈증 315명에서 고용량 cefepime 169명과 carbapenem 146명을 비교했다. 보정 사망위험의 유의한 증가가 관찰되지 않았지만 무작위 비열등성 증명이 아니다. 실제 투여조건·감수성·동반 ESBL 맥락을 생략하는 근거가 되지 않는다."
+    },
+    {
+      "id": "P5",
+      "title": "Antibiotic Treatment for 7 versus 14 Days in Patients with Bloodstream Infections",
+      "authors": "The BALANCE Investigators",
+      "url": "https://www.nejm.org/doi/10.1056/NEJMoa2404991",
+      "doi": "10.1056/NEJMoa2404991",
+      "version": "New England Journal of Medicine 2025;392:1065–1078; online 2024-11-20",
+      "evidence_type": "randomized duration trial; contextual applicability only",
+      "verified_directly": true,
+      "summary": "입원 BSI 3,608명 대상 기간 비교이며 중증 면역억제·장기치료가 필요한 감염 병소 등을 제외했다. 단계축소 약제 선택의 검증으로 사용할 수 없다. 본 초안은 치료기간 추천을 추가하지 않고 복잡한 환자군으로 근거를 외삽할 때의 한계를 참고한다."
+    },
+    {
+      "id": "P6",
+      "title": "Efficacy and safety of a structured de-escalation from antipseudomonal β-lactams in bloodstream infections due to Enterobacterales (SIMPLIFY): an open-label, multicentre, randomised trial",
+      "authors": "López-Cortés LE et al.; SIMPLIFY study group",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38215770/",
+      "version": "Lancet Infectious Diseases 2024;24:375–385; online 2024-01-09",
+      "evidence_type": "randomized de-escalation trial",
+      "verified_directly": true,
+      "summary": "감수성에 따라 사전 정의한 선택지로 항녹농균 β-lactam을 줄이는 구조화 전략을 비교한 연구다. 해당 연구의 선택 순서를 모든 약제·기관·환자의 범용 순위로 확대하지 않는다. 경구전환은 두 군 모두 허용돼 경로 변경과 범위 축소를 구별해야 한다.",
+      "doi": "10.1016/S1473-3099(23)00686-2"
+    },
+    {
+      "id": "DESIGN",
+      "title": "Preserved D–C design (research protocol v1.2 through v1.4) and separate researcher implementation policy",
+      "authors": "Researcher/AI draft; clinician review pending",
+      "url": null,
+      "version": "Protocol v1.4 preserved; separate unreviewed implementation draft v0.1, 2026-10-05",
+      "evidence_type": "our research policy, not a clinical guideline",
+      "verified_directly": false,
+      "summary": "성인 단일균 Enterobacterales BSI, 동일 C응답 재사용 D, 시점·기준요법 확인, 삼값 결측 처리, 환자 정답 미확정 상태의 형식적 검증 차단을 규정한다."
+    }
+  ],
+  "field_contract": {
+    "baseline.current_regimen_established": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "candidate.action": {
+      "default_status": "unknown",
+      "value_type": "enum",
+      "allowed_values": [
+        "de_escalate",
+        "continue",
+        "reassess",
+        "abstain"
+      ]
+    },
+    "candidate.contraindication_or_interaction_present": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "candidate.coverage_change_justified": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "candidate.dosing_feasible": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "candidate.is_cefepime_monotherapy": {
+      "default_status": "unknown",
+      "value_type": "boolean",
+      "notes": "cefepime 단독을 뜻한다. cefepime-enmetazobactam 등 보호 복합제와 구분한다."
+    },
+    "candidate.is_oral": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "candidate.oral_agent_exposure_adequate": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "candidate.primary_agent_resistant": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "candidate.primary_agent_susceptible": {
+      "default_status": "unknown",
+      "value_type": "boolean",
+      "notes": "후보의 원인균 담당 약제에 대한 독립 원자료 AST와 해석판/필요 노출조건에서 계산한다. 생성 모델 주장만으로 채우지 않는다."
+    },
+    "candidate.regimen": {
+      "default_status": "unknown",
+      "value_type": "array of canonical ingredient/regimen identifiers"
+    },
+    "candidate.valid_alternative_or_combination": {
+      "default_status": "unknown",
+      "value_type": "boolean",
+      "notes": "출력 스키마·후보집합의 단순 구조검증과 임상적으로 정당한 병용 여부를 구분한다. 후자는 독립 근거 없이 true로 만들지 않는다."
+    },
+    "case.adult": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "case.enterobacterales_bsi": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "case.monomicrobial": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "course.ceftriaxone_continuation_only": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "course.ceftriaxone_started_empirically": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "course.clinically_improving": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "course.nonsevere": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "evidence.core_consistent": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "infection.deep_or_complicated": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "infection.persistent_bacteremia": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "infection.source_control_adequate": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "organism.ampc_moderate_risk": {
+      "default_status": "unknown",
+      "value_type": "boolean",
+      "notes": "G1 Q2.1: E. cloacae complex, K. aerogenes, C. freundii, H. alvei. 종 수준 표준화가 필요한 경우 unknown. 모든 Enterobacterales를 같은 위험으로 묶지 않는다. Hafnia 근거에는 제한이 있다."
+    },
+    "organism.carbapenem_resistant": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "organism.esbl": {
+      "default_status": "unknown",
+      "value_type": "boolean",
+      "notes": "검사 양성/검증된 추정 기준과 출처를 기록한다. Not tested는 false가 아니다. 이 초안은 ceftriaxone R만으로 모든 균종 ESBL=true를 추정하지 않는다."
+    },
+    "organism.esbl_concern_assessed": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "patient.critically_ill": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "patient.hemodynamically_stable": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "patient.hypoalbuminemia": {
+      "default_status": "unknown",
+      "value_type": "boolean",
+      "notes": "시점·단위·정의 확인 없이 단순 Alb 열로 계산하지 않는다. P3의 <2.5g/dL은 그 연구 정의이며 전문의가 연구 operationalization을 검수해야 한다."
+    },
+    "patient.immunocompromised": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "patient.oral_absorption_adequate": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "review.CRE_mechanism_specific_reviewed": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "review.complicated_case_reviewed": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "review.immunocompromised_case_reviewed": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "review.oral_transition_scope_approved": {
+      "default_status": "unknown",
+      "value_type": "boolean",
+      "notes": "연구자의 별도 경구조건 탐색/주석 범위 허용을 뜻하며 전문의 검수 완료가 아니다. 기존 주성과에 용량·경로·기간 추천을 추가하지 않는다. 고정 시험 결과를 보고 사후 바꾸지 않는다."
+    },
+    "temporal.AST_available_by_T": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    },
+    "temporal.T_established": {
+      "default_status": "unknown",
+      "value_type": "boolean"
+    }
+  },
+  "fact_shape": {
+    "field.name": {
+      "value": null,
+      "status": "unknown",
+      "evidence_ids": [],
+      "available_at": null,
+      "source_type": "structured_source|clinician_review|derived_deterministic|model_proposal"
+    }
+  },
+  "engine_semantics": {
+    "logic": "Strong Kleene three-valued logic: missing/null/unknown -> Unknown; not Unknown -> Unknown; all with False -> False, otherwise Unknown if present; any with True -> True, otherwise Unknown if present.",
+    "allowed_operators": [
+      "eq",
+      "ne",
+      "in",
+      "not_in",
+      "gte",
+      "lte",
+      "exists",
+      "contains_any",
+      "contains_all"
+    ],
+    "scope": "Evaluate first. False is not_applicable. Unknown follows unknown_policy and never becomes false proof. Empty all=true.",
+    "trigger": "When scope is True and predicates=True, apply action; predicates=False means no triggered effect; Unknown follows unknown_policy.",
+    "exceptions": "For a triggered block/defer rule, a fully True exception suppresses only that rule. Unknown exception never suppresses it: retain the restriction and record the unestablished exception. For a positive rule, Unknown exception cannot establish positive support. No exception cancels a separate blocker.",
+    "unknown_policy": {
+      "defer": "unresolved condition, request evidence; not a clinical truth label",
+      "record_only": "record unknown; other blockers still apply; do not call candidate safe",
+      "not_applicable": "only explicitly assigned; cannot treat a known applicable missing safety condition as absent"
+    },
+    "aggregation": "Known candidate block effects, candidate defer effects, and absence of required positive draft-rule support prevent unrestricted release. allow_candidate never cancels a block/defer. Formal-eligibility effects block as-of evaluation; in retrospective_untimed_review they remain formal_blocked metadata. D may keep C as an annotated conditional research proposal; it cannot become an expert clinical reference.",
+    "formal_gate": "adjudicated reference and reviewed rule definition + T/baseline/availability still required for formal clinical evaluation; separate draft pilot is not this gate.",
+    "default_candidate_approval": "preserve means retain the frozen C output with unreviewed status, not clinical endorsement.",
+    "negative_evidence": "Absence of documentation is Unknown. Not tested is Unknown. Known false requires an explicit supporting source or fully specified synthetic fact.",
+    "positive_support_requirement": "Closed-candidate pilot policy: a non-defer proposal with no applicable True allow_candidate rule is retained as unsupported and the D gate defers with NO_POSITIVE_DRAFT_RULE_SUPPORT_ESTABLISHED. This indicates coverage of this draft rule set, not proof that the drug is clinically inappropriate. Scope filters and separate blockers still take priority."
+  },
+  "rules": [
+    {
+      "id": "R01",
+      "title": "모집단 적용",
+      "scope": {
+        "all": []
+      },
+      "predicates": {
+        "not": {
+          "all": [
+            {
+              "field": "case.adult",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "case.enterobacterales_bsi",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "case.monomicrobial",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      },
+      "action": "block",
+      "action_scope": "formal_eligibility",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "모집단 밖과 적용 여부 미확인을 구분한다.",
+      "exceptions": [],
+      "clinician_question": "성인·단일균·혈류감염 정의와 사건 구분이 적절한가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Population",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "required_fields": [
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial"
+      ],
+      "scope_ko": "전체 대상",
+      "human_condition_ko": "성인·Enterobacterales 혈류감염·단일균 중 확인되지 않거나 맞지 않는 조건이 있으면 정식 대상 평가를 멈춘다.",
+      "exception_ko": "규칙 적용 범위와 모집단 적격성은 따로 기록한다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R02",
+      "title": "시점 및 가용성",
+      "scope": {
+        "all": []
+      },
+      "predicates": {
+        "not": {
+          "all": [
+            {
+              "field": "temporal.T_established",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "temporal.AST_available_by_T",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      },
+      "action": "defer",
+      "action_scope": "formal_eligibility",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "배양 채취일을 감수성 보고시각으로 바꾸지 않는다.",
+      "exceptions": [],
+      "clinician_question": "서명된 판단시점과 결과 공개시각을 어떤 원필드로 확정할 것인가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "As-of information set",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "retrospective_untimed_review에서는 formal_blocked 사유만 남기고 이를 임상 보류 정답으로 변환하지 않는다."
+      ],
+      "required_fields": [
+        "temporal.AST_available_by_T",
+        "temporal.T_established"
+      ],
+      "scope_ko": "정식 시점 기반 평가",
+      "human_condition_ko": "T와 약제별 감수성 가용시각이 확인되지 않으면 정식 평가가 준비되지 않은 것으로 기록한다.",
+      "exception_ko": "시점 미상 로컬 초안검토는 가능하나 과거 당시의 판단이나 정답으로 사용하지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R03",
+      "title": "현재 요법 비교 기준",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "field": "case.adult",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.enterobacterales_bsi",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.monomicrobial",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "field": "candidate.action",
+            "op": "in",
+            "value": [
+              "de_escalate",
+              "continue"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "field": "baseline.current_regimen_established",
+          "op": "eq",
+          "value": true
+        }
+      },
+      "action": "defer",
+      "action_scope": "formal_eligibility",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "약제명 언급·누적 사용표시만으로 당시 치료를 확정할 수 없다.",
+      "exceptions": [],
+      "clinician_question": "약제 주문·실제 투여·중단 이력 중 어떤 증거가 현재 요법을 확정하는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Baseline regimen",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "required_fields": [
+        "baseline.current_regimen_established",
+        "candidate.action",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial"
+      ],
+      "scope_ko": "현재 치료와 비교하는 추천",
+      "human_condition_ko": "현재 투여요법을 확정하지 못하면 단계축소 여부를 확정하지 않는다.",
+      "exception_ko": "문구상 약제 언급은 기준요법 증거를 대신하지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R04",
+      "title": "핵심 근거 일치",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "field": "case.adult",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.enterobacterales_bsi",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.monomicrobial",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "field": "candidate.action",
+            "op": "in",
+            "value": [
+              "de_escalate",
+              "continue"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "field": "evidence.core_consistent",
+          "op": "eq",
+          "value": true
+        }
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "상충하거나 출처가 불확실한 핵심 사실은 임의 해소하지 않는다.",
+      "exceptions": [],
+      "clinician_question": "수정 전후 보고·상충 근거 중 무엇을 채택하고 왜인가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Evidence validation",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "required_fields": [
+        "candidate.action",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "evidence.core_consistent"
+      ],
+      "scope_ko": "행동·약제 제안",
+      "human_condition_ko": "핵심 근거의 충돌 또는 검증되지 않은 연결이 남으면 판단을 보류한다.",
+      "exception_ko": "정당한 수정 이력으로 해소했다면 출처와 선택 이유를 보존한다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R05",
+      "title": "명시된 비활성",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "field": "case.adult",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.enterobacterales_bsi",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.monomicrobial",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "field": "candidate.action",
+            "op": "in",
+            "value": [
+              "de_escalate",
+              "continue"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "field": "candidate.primary_agent_resistant",
+        "op": "eq",
+        "value": true
+      },
+      "action": "block",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "record_only",
+      "basis": "source_informed_research_policy",
+      "rationale": "원인균에 대한 명시적 비활성 후보를 그대로 확정하지 않는다.",
+      "exceptions": [],
+      "clinician_question": "AMR 범주의 실제 검사 기준·균/약제 연결이 확인됐는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "General Management Suggestions; Duration of Therapy",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "I/D/NS/Not tested를 임의로 resistant=true로 바꾸지 않는다. 복합제는 단일 성분 검사로 대신하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.primary_agent_resistant",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial"
+      ],
+      "scope_ko": "행동·약제 제안",
+      "human_condition_ko": "후보의 원인균 담당 약제가 명시적으로 비활성이면 추천을 차단한다.",
+      "exception_ko": "I/D/NS와 미검사를 임의로 R로 바꾸지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R06",
+      "title": "감수성과 실행 가능성",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "field": "case.adult",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.enterobacterales_bsi",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.monomicrobial",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "field": "candidate.action",
+            "op": "in",
+            "value": [
+              "de_escalate",
+              "continue"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "all": [
+            {
+              "field": "candidate.primary_agent_susceptible",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "candidate.dosing_feasible",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "시험관 감수성만으로 임상 안전을 인증하지 않는다.",
+      "exceptions": [],
+      "clinician_question": "감수성 범주·신장기능·투여 가능 조건을 확인했는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "General Management Suggestions",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/36968970/",
+          "section": "Treatment exposure; limitations",
+          "version": "Open Forum Infectious Diseases 2023;10:ofad034"
+        }
+      ],
+      "implementation_notes": [
+        "용량을 새로 추천하는 규칙이 아니다. D/SDD 또는 EUCAST I는 해석판·노출조건 확인 전 unknown; 단순 R 변환 금지."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.dosing_feasible",
+        "candidate.primary_agent_susceptible",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial"
+      ],
+      "scope_ko": "행동·약제 제안",
+      "human_condition_ko": "감수성과 실제 투여 가능 조건이 모두 확인되지 않으면 보류한다.",
+      "exception_ko": "S라는 표기만으로 모든 임상 조건을 충족했다고 보지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R07",
+      "title": "환자별 금기·상호작용",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "field": "case.adult",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.enterobacterales_bsi",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.monomicrobial",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "field": "candidate.action",
+            "op": "in",
+            "value": [
+              "de_escalate",
+              "continue"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "field": "candidate.contraindication_or_interaction_present",
+        "op": "eq",
+        "value": true
+      },
+      "action": "block",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "확인된 환자별 위험을 약제 감수성으로 덮지 않는다.",
+      "exceptions": [],
+      "clinician_question": "알레르기·상호작용·독성 위험의 확인 자료와 예외가 있는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Empiric Therapy; patient-specific factors",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "이 도구는 모든 금기/상호작용 데이터베이스를 구현하지 않는다. 미기록을 없음으로 변환하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.contraindication_or_interaction_present",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial"
+      ],
+      "scope_ko": "행동·약제 제안",
+      "human_condition_ko": "후보와 관련된 확인된 환자별 금기·상호작용이 있으면 차단한다.",
+      "exception_ko": "미기록은 위험 없음이 아니며 예외는 전문의가 근거와 함께 판단한다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R08",
+      "title": "ESBL BSI의 PTZ",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "candidate.regimen",
+            "op": "contains_any",
+            "value": [
+              "piperacillin-tazobactam"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "field": "organism.esbl",
+        "op": "eq",
+        "value": true
+      },
+      "action": "block",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "ESBL 혈류감염의 PTZ는 감수성 표기만으로 확정하지 않는다.",
+      "exceptions": [],
+      "clinician_question": "ESBL 근거와 예외적 개별 판단을 어떻게 기록할 것인가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "P1",
+          "url": "https://jamanetwork.com/journals/jama/fullarticle/2702145",
+          "section": "Primary outcome; definitive therapy",
+          "version": "JAMA 2018;320:984–994"
+        },
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q1.4",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "PTZ 비열등성 미입증 근거를 모든 Enterobacterales PTZ 사용 금기로 확대하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "organism.esbl"
+      ],
+      "scope_ko": "PTZ 제안",
+      "human_condition_ko": "ESBL 혈류감염이면 PTZ 일반 허용을 막는다.",
+      "exception_ko": "모든 감수성 Enterobacterales 감염의 전면금지는 아니다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R09",
+      "title": "ESBL BSI의 cefepime 단독",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "candidate.is_cefepime_monotherapy",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "predicates": {
+        "field": "organism.esbl",
+        "op": "eq",
+        "value": true
+      },
+      "action": "block",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "ESBL 침습감염에서는 cefepime 단독을 일반 허용하지 않는다.",
+      "exceptions": [],
+      "clinician_question": "단독제와 cefepime-enmetazobactam을 정확히 구별했는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q1.5",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "cefepime-enmetazobactam은 다른 약제이며 이 규칙으로 묶어 차단하지 않는다. 새로운 복합제는 가용성과 별도 평가가 필요하다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.is_cefepime_monotherapy",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "organism.esbl"
+      ],
+      "scope_ko": "Cefepime 단독 제안",
+      "human_condition_ko": "ESBL 침습감염이면 cefepime 단독 일반 허용을 막는다.",
+      "exception_ko": "보호 복합제는 같은 단독제로 분류하지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R10",
+      "title": "ESBL의 carbapenem 후보",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "organism.esbl",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.regimen",
+            "op": "contains_any",
+            "value": [
+              "meropenem",
+              "imipenem-cilastatin",
+              "ertapenem"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "all": [
+          {
+            "field": "candidate.primary_agent_susceptible",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.dosing_feasible",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "action": "allow_candidate",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "preserve",
+      "unknown_policy": "record_only",
+      "basis": "source_informed_research_policy",
+      "rationale": "조건을 충족한 carbapenem은 후보로 검토한다.",
+      "exceptions": [],
+      "clinician_question": "어떤 대안들을 함께 허용할 것이며 환자별 선택 이유는 무엇인가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q1.3",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        },
+        {
+          "source_id": "P1",
+          "url": "https://jamanetwork.com/journals/jama/fullarticle/2702145",
+          "section": "Comparator and scope",
+          "version": "JAMA 2018;320:984–994"
+        }
+      ],
+      "implementation_notes": [
+        "이 규칙은 R11·R07·기타 보류/차단을 무효화하지 않는다. 전역 우선순위표가 아니다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.dosing_feasible",
+        "candidate.primary_agent_susceptible",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "organism.esbl"
+      ],
+      "scope_ko": "ESBL의 carbapenem 제안",
+      "human_condition_ko": "활성과 실행 조건을 충족하면 후보 지지를 기록한다.",
+      "exception_ko": "다른 차단·보류가 있으면 이 규칙만으로 통과시키지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R11",
+      "title": "Ertapenem 중증·저알부민 조건",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "organism.esbl",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.regimen",
+            "op": "contains_any",
+            "value": [
+              "ertapenem"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "any": [
+          {
+            "field": "patient.critically_ill",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "patient.hypoalbuminemia",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "중증·저알부민에서는 ertapenem을 재검토한다.",
+      "exceptions": [],
+      "clinician_question": "중증도와 알부민의 시점·단위·정의를 확인했는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q1.3",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25636928/",
+          "section": "Prospective cohort; limitations",
+          "version": "Clinical Microbiology and Infection 2015;21:54–58"
+        }
+      ],
+      "implementation_notes": [
+        "선호 차이와 관찰연구를 절대 금기로 바꾸지 않으므로 block 대신 defer. 표준 정의를 검수하기 전 현재 Alb 수치로 플래그 자동생성 금지."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "organism.esbl",
+        "patient.critically_ill",
+        "patient.hypoalbuminemia"
+      ],
+      "scope_ko": "ESBL의 ertapenem 제안",
+      "human_condition_ko": "중증 또는 저알부민 조건이면 별도 재검토한다.",
+      "exception_ko": "선호 차이를 절대 금기로 바꾸지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R12",
+      "title": "AmpC와 ceftriaxone 일반 제한",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "organism.ampc_moderate_risk",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.regimen",
+            "op": "contains_any",
+            "value": [
+              "ceftriaxone"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "all": []
+      },
+      "action": "block",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "침습 AmpC 감염의 일반 제한과 계속투여 예외를 나눈다.",
+      "exceptions": [
+        {
+          "predicates": {
+            "all": [
+              {
+                "field": "candidate.action",
+                "op": "eq",
+                "value": "continue"
+              },
+              {
+                "field": "course.nonsevere",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "course.ceftriaxone_started_empirically",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "course.ceftriaxone_continuation_only",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "course.clinically_improving",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "infection.source_control_adequate",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "candidate.primary_agent_susceptible",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          "effect": "do_not_apply",
+          "rationale": "R13 조건이 모두 확인된 계속투여 예외만 해당.",
+          "unknown_exception_policy": "retain_rule_and_report_unknown"
+        }
+      ],
+      "clinician_question": "현재 약의 계속투여인가, 새 단계축소 제안인가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q2.4",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "예외 unknown이면 do_not_apply를 실행하지 않고 원 제한을 유지하며 예외 미확인을 함께 기록한다. 예외가 없다고 확정한 것은 아니다. D의 연구 gate 효과는 보류이다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.primary_agent_susceptible",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "course.ceftriaxone_continuation_only",
+        "course.ceftriaxone_started_empirically",
+        "course.clinically_improving",
+        "course.nonsevere",
+        "infection.source_control_adequate",
+        "organism.ampc_moderate_risk"
+      ],
+      "scope_ko": "중등도 AmpC 위험의 ceftriaxone 제안",
+      "human_condition_ko": "일반 제한을 적용하고, 계속투여 예외 충족 여부를 별도 확인한다.",
+      "exception_ko": "비중증·경험적 시작·호전·통제·감수성과 continue 행동이 모두 필요하다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R13",
+      "title": "Ceftriaxone 계속투여 예외 후보",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "organism.ampc_moderate_risk",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.regimen",
+            "op": "contains_any",
+            "value": [
+              "ceftriaxone"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "all": [
+          {
+            "field": "candidate.action",
+            "op": "eq",
+            "value": "continue"
+          },
+          {
+            "field": "course.nonsevere",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "course.ceftriaxone_started_empirically",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "course.ceftriaxone_continuation_only",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "course.clinically_improving",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "infection.source_control_adequate",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.primary_agent_susceptible",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "action": "allow_candidate",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "preserve",
+      "unknown_policy": "record_only",
+      "basis": "source_informed_research_policy",
+      "rationale": "비중증·경험적 시작·호전·감염원 통제의 계속투여를 검토한다.",
+      "exceptions": [],
+      "clinician_question": "계속투여 예외의 모든 조건에 실제 근거가 있는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q2.4",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "새 ceftriaxone 전환은 이 예외가 아니다. 허용 후보는 전문의 최종 정답 또는 자동안전 판정이 아니다.",
+        "C가 de_escalate라고 표시했는데 계속투여 사실 플래그가 true인 모순은 이 예외로 허용하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.primary_agent_susceptible",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "course.ceftriaxone_continuation_only",
+        "course.ceftriaxone_started_empirically",
+        "course.clinically_improving",
+        "course.nonsevere",
+        "infection.source_control_adequate",
+        "organism.ampc_moderate_risk"
+      ],
+      "scope_ko": "R12의 계속투여 예외",
+      "human_condition_ko": "예외 조건과 continue 행동이 모두 확인되면 후보 지지를 기록한다.",
+      "exception_ko": "새 단계축소 제안에는 이 예외를 적용하지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R14",
+      "title": "AmpC의 PTZ",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "organism.ampc_moderate_risk",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.regimen",
+            "op": "contains_any",
+            "value": [
+              "piperacillin-tazobactam"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "all": []
+      },
+      "action": "block",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "침습 AmpC 감염에서는 PTZ 일반 비권고를 반영한다.",
+      "exceptions": [],
+      "clinician_question": "AmpC 위험 균 분류와 침습감염 사실이 정확한가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q2.5",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "organism.ampc_moderate_risk"
+      ],
+      "scope_ko": "중등도 AmpC 위험의 PTZ 제안",
+      "human_condition_ko": "침습감염 PTZ 일반 비권고를 검사한다.",
+      "exception_ko": "종 수준 위험 분류가 불명확하면 적용 여부를 확정하지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R15",
+      "title": "AmpC의 cefepime 후보",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "organism.ampc_moderate_risk",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.regimen",
+            "op": "contains_any",
+            "value": [
+              "cefepime"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "all": [
+          {
+            "field": "candidate.primary_agent_susceptible",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.dosing_feasible",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "organism.esbl_concern_assessed",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "organism.esbl",
+            "op": "eq",
+            "value": false
+          }
+        ]
+      },
+      "action": "allow_candidate",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "preserve",
+      "unknown_policy": "record_only",
+      "basis": "source_informed_research_policy",
+      "rationale": "감수성·투여조건·ESBL 맥락을 확인한 후보를 검토한다.",
+      "exceptions": [],
+      "clinician_question": "확인 가능한 검사·임상 맥락으로 ESBL 우려를 평가했는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q2.3",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/36968970/",
+          "section": "Definitive therapy cohort",
+          "version": "Open Forum Infectious Diseases 2023;10:ofad034"
+        }
+      ],
+      "implementation_notes": [
+        "미시행 ESBL 검사를 음성으로 바꾸지 않는다. 모든 사례에 유전자검사를 의무화한 지침은 아니며, 이 초안의 명시적 검토 플래그는 구현 정책이다. unknown은 cefepime 효과없음의 증거가 아니다.",
+        "감수성 범주가 dose-dependent인 경우 노출조건 확인이 필요하다. 분자검사 미시행 자체를 cefepime 금기로 판정하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.dosing_feasible",
+        "candidate.primary_agent_susceptible",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "organism.ampc_moderate_risk",
+        "organism.esbl",
+        "organism.esbl_concern_assessed"
+      ],
+      "scope_ko": "중등도 AmpC 위험의 cefepime 제안",
+      "human_condition_ko": "활성·노출조건·ESBL 맥락 검토를 충족하면 후보를 검토한다.",
+      "exception_ko": "미시행 유전자검사를 음성으로 바꾸거나 보편적 의무검사로 만들지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R16",
+      "title": "경구전환 조건",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "candidate.is_oral",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "all": [
+            {
+              "field": "review.oral_transition_scope_approved",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "candidate.primary_agent_susceptible",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "patient.hemodynamically_stable",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "patient.oral_absorption_adequate",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "candidate.oral_agent_exposure_adequate",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "infection.source_control_adequate",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "course.clinically_improving",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        }
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "경구전환의 적용 조건과 연구 범위를 확인한다.",
+      "exceptions": [],
+      "clinician_question": "흡수·혈역학·노출·감염원 조건과 경구 전환 평가 범위가 확인됐는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "P2",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37858867/",
+          "section": "Eligibility and exclusions",
+          "version": "Clinical Microbiology and Infection 2024;30:492–498; online 2023-10-18"
+        },
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Transitioning to Oral Therapy; Q1.3",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        },
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Route not a new primary endpoint",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "원 계획의 용량·경로·기간 주성과를 확대하지 않는다. 경구 제안이 나오면 별도 조건만 기록한다. P2의 3–5일/48시간은 시험 선정조건이며 이 코드의 보편 숫자 임계값이 아니다.",
+        "Source control과 임상호전은 SOAB 선정 맥락을 반영한 이 초안의 보수적 추가조건이다. IDSA 2026 일반 경구전환의 명시 조건 전체라고 인용하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.is_oral",
+        "candidate.oral_agent_exposure_adequate",
+        "candidate.primary_agent_susceptible",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "course.clinically_improving",
+        "infection.source_control_adequate",
+        "patient.hemodynamically_stable",
+        "patient.oral_absorption_adequate",
+        "review.oral_transition_scope_approved"
+      ],
+      "scope_ko": "경구 약제 제안",
+      "human_condition_ko": "활성·안정·흡수·노출과 별도 연구조건이 확인되지 않으면 보류한다.",
+      "exception_ko": "통제·호전 추가조건은 SOAB 맥락의 보수적 구현이며 지침 문장을 그대로 옮긴 것이 아니다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R17",
+      "title": "ESBL BSI의 부적절한 경구 후보",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "organism.esbl",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.is_oral",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "predicates": {
+        "field": "candidate.regimen",
+        "op": "contains_any",
+        "value": [
+          "nitrofurantoin",
+          "fosfomycin",
+          "amoxicillin-clavulanate",
+          "omadacycline",
+          "doxycycline",
+          "sulopenem"
+        ]
+      },
+      "action": "block",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "source_informed_research_policy",
+      "rationale": "요로감염 선택지를 ESBL 혈류감염에 그대로 옮기지 않는다.",
+      "exceptions": [],
+      "clinician_question": "적응증·제형·혈중 노출의 구별이 정확한가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q1.3 oral transition",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "여기서 fosfomycin은 경구 제형이다. IV 제형을 같은 규칙으로 차단하지 않는다. 다른 병원체·동반감염 적응증까지 전면금지하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.is_oral",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "organism.esbl"
+      ],
+      "scope_ko": "ESBL BSI 경구 제안",
+      "human_condition_ko": "지침상 권고되지 않는 경구 후보군을 차단한다.",
+      "exception_ko": "경구 제형과 IV 제형, 혈류감염과 단순 요로감염을 구별한다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R18",
+      "title": "선별된 경구 후보",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "candidate.is_oral",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.regimen",
+            "op": "contains_any",
+            "value": [
+              "ciprofloxacin",
+              "levofloxacin",
+              "trimethoprim-sulfamethoxazole"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "all": [
+          {
+            "field": "review.oral_transition_scope_approved",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.primary_agent_susceptible",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "patient.hemodynamically_stable",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "patient.oral_absorption_adequate",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "candidate.oral_agent_exposure_adequate",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "infection.source_control_adequate",
+            "op": "eq",
+            "value": true
+          },
+          {
+            "field": "course.clinically_improving",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "action": "allow_candidate",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "preserve",
+      "unknown_policy": "record_only",
+      "basis": "source_informed_research_policy",
+      "rationale": "충족된 경구 후보를 별도 표시한다.",
+      "exceptions": [],
+      "clinician_question": "후보 간 대안과 환자별 독성·상호작용을 확인했는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "P2",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37858867/",
+          "section": "Selected population and outcomes",
+          "version": "Clinical Microbiology and Infection 2024;30:492–498; online 2023-10-18"
+        },
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Q1.3",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        }
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.is_oral",
+        "candidate.oral_agent_exposure_adequate",
+        "candidate.primary_agent_susceptible",
+        "candidate.regimen",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "course.clinically_improving",
+        "infection.source_control_adequate",
+        "patient.hemodynamically_stable",
+        "patient.oral_absorption_adequate",
+        "review.oral_transition_scope_approved"
+      ],
+      "scope_ko": "선별된 경구 후보",
+      "human_condition_ko": "R16의 조건이 충족된 선택지를 후보로 표시한다.",
+      "exception_ko": "경로 전환 자체를 단계축소 또는 정답으로 보지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R19",
+      "title": "감염원 미확인",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "field": "case.adult",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.enterobacterales_bsi",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.monomicrobial",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "field": "candidate.action",
+            "op": "eq",
+            "value": "de_escalate"
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "field": "infection.source_control_adequate",
+          "op": "eq",
+          "value": true
+        }
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "감염원 문제가 남은 단순화 추천은 별도 검토한다.",
+      "exceptions": [],
+      "clinician_question": "어떤 source control이 필요한 감염이며 완료/불필요 판단의 근거는 무엇인가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "P2",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37858867/",
+          "section": "No uncontrolled focus criterion",
+          "version": "Clinical Microbiology and Infection 2024;30:492–498; online 2023-10-18"
+        },
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Conservative review policy",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "통제가 필요 없는 상황이 확인되면 adequate=true로 표현할 수 있으나 근거를 붙인다. 통제 미완료가 모든 약제 축소의 절대 금기라는 문헌 주장은 아니다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "infection.source_control_adequate"
+      ],
+      "scope_ko": "단계축소 제안",
+      "human_condition_ko": "감염원 통제 적절성이 미확인이면 추가 검토한다.",
+      "exception_ko": "필요한 처치가 없다는 확인은 가능하나 기록 부재를 통제 완료로 바꾸지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R20",
+      "title": "면역억제 맥락",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "patient.immunocompromised",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "field": "review.immunocompromised_case_reviewed",
+          "op": "eq",
+          "value": true
+        }
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "일반 연구 근거의 외삽 여부를 확인한다.",
+      "exceptions": [],
+      "clinician_question": "면역억제 유형과 정도를 검토했고 어떤 근거를 적용하는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "P5",
+          "url": "https://www.nejm.org/doi/10.1056/NEJMoa2404991",
+          "section": "Exclusions; not a de-escalation trial",
+          "version": "New England Journal of Medicine 2025;392:1065–1078; online 2024-11-20"
+        },
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Patient subgroup review",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "면역억제 자체가 단계축소의 절대 금기이거나 모집단 제외라는 규칙은 아니다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "patient.immunocompromised",
+        "review.immunocompromised_case_reviewed"
+      ],
+      "scope_ko": "면역억제 환자",
+      "human_condition_ko": "해당 환자군의 적용성 검토가 없으면 일반 결과를 확정 적용하지 않는다.",
+      "exception_ko": "면역억제 자체가 약제 축소의 절대 금기나 모집단 제외는 아니다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R21",
+      "title": "복잡감염·지속 균혈증",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "any": [
+              {
+                "field": "infection.deep_or_complicated",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "infection.persistent_bacteremia",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "field": "review.complicated_case_reviewed",
+          "op": "eq",
+          "value": true
+        }
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "별도 평가가 필요한 감염을 단순 사례와 합치지 않는다.",
+      "exceptions": [],
+      "clinician_question": "심내막·혈관내·CNS·심부 병소·지속 균혈증의 근거와 별도 판단이 있는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "P2",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37858867/",
+          "section": "Endocarditis/neurologic exclusions",
+          "version": "Clinical Microbiology and Infection 2024;30:492–498; online 2023-10-18"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/36968970/",
+          "section": "Deep infection association",
+          "version": "Open Forum Infectious Diseases 2023;10:ofad034"
+        },
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Complex-case review",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "기록 없음은 복잡감염 없음이 아니다. 양성 추적배양만으로 동일 사건의 지속 균혈증을 자동 확정하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "infection.deep_or_complicated",
+        "infection.persistent_bacteremia",
+        "review.complicated_case_reviewed"
+      ],
+      "scope_ko": "복잡 병소·지속 균혈증",
+      "human_condition_ko": "사례별 검토가 없으면 단순 사례의 규칙으로 자동 확정하지 않는다.",
+      "exception_ko": "기록 없음으로 복잡 감염이 없다고 판정하지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R22",
+      "title": "CRE와 규칙 적용 범위",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "all": [
+                  {
+                    "field": "case.adult",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.enterobacterales_bsi",
+                    "op": "eq",
+                    "value": true
+                  },
+                  {
+                    "field": "case.monomicrobial",
+                    "op": "eq",
+                    "value": true
+                  }
+                ]
+              },
+              {
+                "field": "candidate.action",
+                "op": "in",
+                "value": [
+                  "de_escalate",
+                  "continue"
+                ]
+              }
+            ]
+          },
+          {
+            "field": "organism.carbapenem_resistant",
+            "op": "eq",
+            "value": true
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "field": "review.CRE_mechanism_specific_reviewed",
+          "op": "eq",
+          "value": true
+        }
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "이 간단한 ESBL/AmpC 규칙집 밖의 내성 기전을 검토한다.",
+      "exceptions": [],
+      "clinician_question": "Carbapenem 내성 기전과 후보 활성에 별도 검토가 필요한가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "G1",
+          "url": "https://www.idsociety.org/practice-guideline/amr-guidance/",
+          "section": "Section 3, CRE; separate questions",
+          "version": "Published 2026-07-30; evidence/consensus current 2026-03-01; accessed 2026-10-05"
+        },
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Scope limitation",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "CRE도 Enterobacterales BSI 모집단에 속할 수 있다. 규칙 범위 밖을 모집단 제외나 모든 약제 무효로 바꾸지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial",
+        "organism.carbapenem_resistant",
+        "review.CRE_mechanism_specific_reviewed"
+      ],
+      "scope_ko": "Carbapenem 내성",
+      "human_condition_ko": "기전별 검토가 없는 이 규칙집에서는 추가 검토로 보낸다.",
+      "exception_ko": "CRE라는 이유만으로 Enterobacterales BSI 모집단 밖으로 제외하지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R23",
+      "title": "범위 축소의 정의",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "field": "case.adult",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.enterobacterales_bsi",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.monomicrobial",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "field": "candidate.action",
+            "op": "eq",
+            "value": "de_escalate"
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "field": "candidate.coverage_change_justified",
+          "op": "eq",
+          "value": true
+        }
+      },
+      "action": "defer",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "현재 요법 대비 무엇을 줄이는지 근거를 남긴다.",
+      "exceptions": [],
+      "clinician_question": "불필요한 범위·중복 감소와 필요한 활성 보존이 확인됐는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "P6",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/38215770/",
+          "section": "Structured selection in a specific trial",
+          "version": "Lancet Infectious Diseases 2024; accessed 2026-10-05"
+        },
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "No global drug hierarchy",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "implementation_notes": [
+        "경구 전환만으로 범위축소라고 하지 않는다. SIMPLIFY의 선택 알고리즘 또는 IDSA 나열 순서를 전 약제의 총순위로 사용하지 않는다."
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.coverage_change_justified",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial"
+      ],
+      "scope_ko": "단계축소 제안",
+      "human_condition_ko": "필요한 활성을 보존하면서 현재 요법의 무엇을 줄이는지 확인되지 않으면 보류한다.",
+      "exception_ko": "경구 전환만으로 또는 모든 약제의 단일 순위로 축소를 확정하지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    },
+    {
+      "id": "R24",
+      "title": "대안과 병용의 구분",
+      "scope": {
+        "all": [
+          {
+            "all": [
+              {
+                "field": "case.adult",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.enterobacterales_bsi",
+                "op": "eq",
+                "value": true
+              },
+              {
+                "field": "case.monomicrobial",
+                "op": "eq",
+                "value": true
+              }
+            ]
+          },
+          {
+            "field": "candidate.action",
+            "op": "in",
+            "value": [
+              "de_escalate",
+              "continue"
+            ]
+          }
+        ]
+      },
+      "predicates": {
+        "not": {
+          "field": "candidate.valid_alternative_or_combination",
+          "op": "eq",
+          "value": true
+        }
+      },
+      "action": "block",
+      "action_scope": "candidate_proposal",
+      "gate_effect": "defer",
+      "unknown_policy": "defer",
+      "basis": "research_implementation_policy",
+      "rationale": "대안 목록을 합쳐 존재하지 않는 병용 정답으로 만들지 않는다.",
+      "exceptions": [],
+      "clinician_question": "A 또는 B와 A+B를 구분했으며 동반감염 목적의 약제를 보존했는가?",
+      "reviewed": false,
+      "source_refs": [
+        {
+          "source_id": "DESIGN",
+          "url": null,
+          "section": "Set-valued action–regimen reference",
+          "version": "Protocol v1.4 preserved; separate implementation draft v0.1, 2026-10-05"
+        }
+      ],
+      "required_fields": [
+        "candidate.action",
+        "candidate.valid_alternative_or_combination",
+        "case.adult",
+        "case.enterobacterales_bsi",
+        "case.monomicrobial"
+      ],
+      "scope_ko": "다중 선택지·병용 제안",
+      "human_condition_ko": "대안과 실제 병용을 구분하지 못한 조합은 차단한다.",
+      "exception_ko": "복수 정답을 단순 합집합의 병용 처방으로 바꾸지 않는다.",
+      "clinician_review_form": {
+        "decision": null,
+        "allowed_decisions": [
+          "accept",
+          "revise",
+          "reject",
+          "insufficient"
+        ],
+        "corrected_condition": null,
+        "corrected_exception": null,
+        "evidence_or_local_context": null,
+        "reviewer_id": null,
+        "reviewed_at": null,
+        "final_approval": null
+      }
+    }
+  ],
+  "non_goals": [
+    "global antibiotic potency/rank ordering",
+    "automatic dosing or duration recommendation",
+    "diagnosing ESBL/AmpC from any isolated resistance marker without a validated rule",
+    "forcing one regimen when multiple alternatives are permissible",
+    "turning shared-draft expert correction into independent de novo gold",
+    "claiming clinical efficacy from synthetic specification agreement"
+  ],
+  "pre_freeze_revision": 2,
+  "coverage_limits": {
+    "positive_support_rule_ids": [
+      "R10",
+      "R13",
+      "R15",
+      "R18"
+    ],
+    "ordinary_susceptible_non_ESBL_non_AmpC": "No general automatic positive support is implemented; unsupported is a rule-coverage result, not clinical inappropriateness. Expand only after clinician review and preserve held-out evaluation.",
+    "other_drugs_or_combinations": "If outside closed candidates or no applicable positive support, record unsupported/defer. Do not invent a universal drug hierarchy.",
+    "rule_vs_clinical_truth": "All rules unreviewed. A blocked unreviewed recommendation is not automatically an expert-labelled error, and a released recommendation is not proven safe."
+  }
+}
